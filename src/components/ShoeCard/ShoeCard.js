@@ -1,9 +1,26 @@
-import React from 'react';
-import styled from 'styled-components/macro';
+import React from "react";
+import styled from "styled-components/macro";
 
-import { COLORS, WEIGHTS } from '../../constants';
-import { formatPrice, pluralize, isNewShoe } from '../../utils';
-import Spacer from '../Spacer';
+import { COLORS, WEIGHTS } from "../../constants";
+import { formatPrice, pluralize, isNewShoe } from "../../utils";
+import Spacer from "../Spacer";
+
+const STYLES = {
+  "on-sale": {
+    "--price-decoration": "line-through",
+    "--price-color": COLORS.gray[700],
+    bannerText: "Sale",
+    "--banner-color": COLORS.primary,
+  },
+  "new-release": {
+    "--price-color": "inherit",
+    bannerText: "Just Released!",
+    "--banner-color": COLORS.secondary,
+  },
+  default: {
+    "--price-color": "inherit",
+  },
+};
 
 const ShoeCard = ({
   slug,
@@ -31,19 +48,35 @@ const ShoeCard = ({
       ? 'new-release'
       : 'default'
 
+  if (salePrice) console.log(name, salePrice);
+
+  const styles = STYLES[variant];
+
+  if (!styles) {
+    throw new Error(`invalid variant for ShoeCard: ${variant}`);
+  }
+
   return (
     <Link href={`/shoe/${slug}`}>
       <Wrapper>
         <ImageWrapper>
           <Image alt="" src={imageSrc} />
+          {styles.bannerText ? (
+            <Banner style={{ "--banner-color": styles["--banner-color"] }}>
+              {styles.bannerText}
+            </Banner>
+          ) : null}
         </ImageWrapper>
         <Spacer size={12} />
         <Row>
           <Name>{name}</Name>
-          <Price>{formatPrice(price)}</Price>
+          <Price style={styles}>{formatPrice(price)}</Price>
         </Row>
         <Row>
-          <ColorInfo>{pluralize('Color', numOfColors)}</ColorInfo>
+          <ColorInfo>{pluralize("Color", numOfColors)}</ColorInfo>
+          {variant === "on-sale" ? (
+            <SalePrice>{formatPrice(salePrice)}</SalePrice>
+          ) : null}
         </Row>
       </Wrapper>
     </Link>
@@ -51,6 +84,9 @@ const ShoeCard = ({
 };
 
 const Link = styled.a`
+  flex: 1 0 340px;
+  margin-bottom: 26px; // 62 in figma, minus 36 gap
+
   text-decoration: none;
   color: inherit;
 `;
@@ -59,12 +95,37 @@ const Wrapper = styled.article``;
 
 const ImageWrapper = styled.div`
   position: relative;
+  width: 100%;
+  min-height: 312px;
+  background-color: ${COLORS.gray[100]};
 `;
 
-const Image = styled.img``;
+const Banner = styled.div`
+  position: absolute;
+  top: 12px;
+  right: -4px;
+  padding: 7px 9px 9px 10px;
+  background-color: var(--banner-color);
+  border-radius: 2px;
+
+  color: ${COLORS.white};
+  font-weight: 700;
+  font-size: ${14 / 16}rem;
+`;
+
+const Image = styled.img`
+  max-width: 100%;
+  max-height: 100%;
+  position: absolute;
+  bottom: 0;
+  top: 0;
+  margin: auto;
+`;
 
 const Row = styled.div`
   font-size: 1rem;
+  display: flex;
+  justify-content: space-between;
 `;
 
 const Name = styled.h3`
@@ -72,7 +133,10 @@ const Name = styled.h3`
   color: ${COLORS.gray[900]};
 `;
 
-const Price = styled.span``;
+const Price = styled.span`
+  color: var(--price-color);
+  text-decoration: var(--price-decoration);
+`;
 
 const ColorInfo = styled.p`
   color: ${COLORS.gray[700]};

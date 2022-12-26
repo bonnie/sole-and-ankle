@@ -1,19 +1,37 @@
-import React from 'react';
-import styled from 'styled-components/macro';
+import React from "react";
+import styled from "styled-components/macro";
 
-import { COLORS, WEIGHTS } from '../../constants';
-import Icon from '../Icon';
+import { COLORS, WEIGHTS } from "../../constants";
+import Icon from "../Icon";
 
-const Select = ({ label, value, children, ...delegated }) => {
+const STYLES = {
+  vertical: {},
+  horizontal: {
+    "--wrapper-display": "flex",
+    "--align-items": "center",
+  },
+};
+
+const Select = ({
+  label,
+  value,
+  direction = "vertical",
+  children,
+  ...delegated
+}) => {
+  const styles = STYLES[direction];
+
+  if (!styles) {
+    throw new Error(`invalid value for direction: ${direction}`);
+  }
+
   const childArray = React.Children.toArray(children);
-  const selectedChild = childArray.find(
-    (child) => child.props.value === value
-  );
+  const selectedChild = childArray.find((child) => child.props.value === value);
 
   const displayedValue = selectedChild.props.children;
 
   return (
-    <Wrapper>
+    <Wrapper style={styles}>
       <VisibleLabel>{label}</VisibleLabel>
 
       <SelectWrapper>
@@ -21,18 +39,17 @@ const Select = ({ label, value, children, ...delegated }) => {
 
         <DisplayedBit>
           {displayedValue}
-          <ChevronIcon
-            id="chevron-down"
-            size={24}
-            strokeWidth={1.5}
-          />
+          <ChevronIcon id="chevron-down" size={24} strokeWidth={1.5} />
         </DisplayedBit>
       </SelectWrapper>
     </Wrapper>
   );
 };
 
-const Wrapper = styled.label``;
+const Wrapper = styled.label`
+  display: var(--wrapper-display);
+  align-items: var(--align-items);
+`;
 
 const VisibleLabel = styled.span`
   color: ${COLORS.gray[700]};

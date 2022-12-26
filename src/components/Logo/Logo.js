@@ -1,7 +1,7 @@
-import React from 'react';
-import styled from 'styled-components/macro';
+import React from "react";
+import styled from "styled-components/macro";
 
-import { WEIGHTS } from '../../constants';
+import { WEIGHTS } from "../../constants";
 
 const Logo = (props) => {
   return (
@@ -14,6 +14,11 @@ const Logo = (props) => {
 const Link = styled.a`
   text-decoration: none;
   color: inherit;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  max-height: fit-content;
 `;
 
 const Wrapper = styled.h1`
