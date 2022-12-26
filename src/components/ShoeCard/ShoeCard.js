@@ -61,6 +61,7 @@ const ShoeCard = ({
       <Wrapper>
         <ImageWrapper>
           <Image alt="" src={imageSrc} />
+          {/* Josh used composed elements Flag, SaleFlag, NewFlag */}
           {styles.bannerText ? (
             <Banner style={{ "--banner-color": styles["--banner-color"] }}>
               {styles.bannerText}

@@ -8,7 +8,7 @@ const STYLES = {
   vertical: {},
   horizontal: {
     "--wrapper-display": "flex",
-    "--align-items": "center",
+    "--align-items": "baseline",
   },
 };
 

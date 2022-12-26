@@ -39,6 +39,9 @@ const Nav = styled.nav`
   align-items: center;
   height: 72px;
   justify-content: center;
+
+  // Josh does centering with "Side" component on either side of nav
+  // Josh's solution is much better than mine here ;-)
   /* margin: 0 10.625rem; */ // doesn't work to keep nav from overlapping logo...
 `;
 

@@ -20,4 +20,7 @@ const Wrapper = styled.div`
   gap: 38px;
 `;
 
+// Josh's solution creates ShoeWrapper component and styles the grid
+//   here instead of in ShoeCard
+
 export default ShoeGrid;
