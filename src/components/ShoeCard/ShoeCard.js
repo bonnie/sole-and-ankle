@@ -95,9 +95,6 @@ const Wrapper = styled.article``;
 
 const ImageWrapper = styled.div`
   position: relative;
-  width: 100%;
-  min-height: 312px;
-  background-color: ${COLORS.gray[100]};
 `;
 
 const Banner = styled.div`
@@ -116,10 +113,6 @@ const Banner = styled.div`
 const Image = styled.img`
   max-width: 100%;
   max-height: 100%;
-  position: absolute;
-  bottom: 0;
-  top: 0;
-  margin: auto;
 `;
 
 const Row = styled.div`
